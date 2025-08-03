@@ -4,48 +4,44 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>DIYAN'S MART</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <header>
     <h1>🛒 DIYAN'S MART</h1>
     <div class="header-buttons">
-      <a href="cart.html" class="cart-link">🛒 Cart: <span id="cart-count">0</span></a>
-      <button id="location-btn">📍 Use My Location</button>
-      <button id="logout-btn">Logout</button>
+      <button onclick="useLocation()">📍 Use My Location</button>
+      <button onclick="location.href='cart.html'">🛒 Cart: <span id="cart-count">0</span></button>
+      <button onclick="logout()">Logout</button>
     </div>
   </header>
 
-  <div class="container">
-    <aside>
+  <main>
+    <aside class="sidebar">
       <h2>Categories</h2>
-      <div id="filters">
-        <button class="category-btn" data-category="all">All</button>
-        <button class="category-btn" data-category="fruits">Fruits</button>
-        <button class="category-btn" data-category="vegetables">Vegetables</button>
-        <button class="category-btn" data-category="dairy">Dairy</button>
-        <button class="category-btn" data-category="bakery">Bakery</button>
-        <button class="category-btn" data-category="packaged">Packaged</button>
-        <button class="category-btn" data-category="personal">Personal Care</button>
-        <button class="category-btn" data-category="household">Household</button>
-        <button class="category-btn" data-category="spices">Spices</button>
-        <button class="category-btn" data-category="grains">Grains</button>
-        <button class="category-btn" data-category="beverages">Beverages</button>
+      <div class="categories">
+        <button onclick="filterCategory('all')">All</button>
+        <button onclick="filterCategory('fruits')">Fruits</button>
+        <button onclick="filterCategory('vegetables')">Vegetables</button>
+        <button onclick="filterCategory('dairy')">Dairy</button>
+        <button onclick="filterCategory('bakery')">Bakery</button>
+        <button onclick="filterCategory('packaged')">Packaged</button>
+        <button onclick="filterCategory('personal care')">Personal Care</button>
+        <button onclick="filterCategory('household')">Household</button>
+        <button onclick="filterCategory('spices')">Spices</button>
+        <button onclick="filterCategory('grains')">Grains</button>
+        <button onclick="filterCategory('beverages')">Beverages</button>
       </div>
     </aside>
 
-    <main>
-      <h2 class="welcome">👋 Welcome to <span>DIYAN'S MART</span>!</h2>
-      <input
-        type="text"
-        id="search-bar"
-        placeholder="Search for a product..."
-      />
-      <p id="location-output"></p>
-      <div id="product-list" class="grid"></div>
-    </main>
-  </div>
+    <section class="content">
+      <h2>👋 Welcome to DIYAN'S MART!</h2>
+      <input type="text" id="search" placeholder="Search for a product..." oninput="searchProducts()" />
+      <div id="product-list" class="product-list"></div>
+    </section>
+  </main>
 
-  <script type="module" src="script.js"></script>
+  <script src="products.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
