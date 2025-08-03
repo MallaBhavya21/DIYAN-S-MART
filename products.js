@@ -2,108 +2,71 @@ const products = [
   {
     id: 1,
     name: "Apple",
-    category: "fruits",
+    category: "Fruits",
     price: 120,
-    image: "https://i.imgur.com/O1RmSjo.jpg",
+    image: "https://source.unsplash.com/200x200/?apple"
   },
   {
     id: 2,
-    name: "Banana",
-    category: "fruits",
-    price: 40,
-    image: "https://i.imgur.com/w1NOe9B.jpg",
+    name: "Carrot",
+    category: "Vegetables",
+    price: 50,
+    image: "https://source.unsplash.com/200x200/?carrot"
   },
   {
     id: 3,
-    name: "Tomato",
-    category: "vegetables",
-    price: 30,
-    image: "https://i.imgur.com/fVJ5i3T.jpg",
+    name: "Milk",
+    category: "Dairy",
+    price: 60,
+    image: "https://source.unsplash.com/200x200/?milk"
   },
   {
     id: 4,
-    name: "Potato",
-    category: "vegetables",
-    price: 25,
-    image: "https://i.imgur.com/vf3bNQB.jpg",
+    name: "Bread",
+    category: "Bakery",
+    price: 40,
+    image: "https://source.unsplash.com/200x200/?bread"
   },
   {
     id: 5,
-    name: "Milk (1L)",
-    category: "dairy",
-    price: 55,
-    image: "https://i.imgur.com/HGpOQyM.jpg",
+    name: "Shampoo",
+    category: "Personal Care",
+    price: 180,
+    image: "https://source.unsplash.com/200x200/?shampoo"
   },
   {
     id: 6,
-    name: "Curd",
-    category: "dairy",
-    price: 40,
-    image: "https://i.imgur.com/HXxMgNh.jpg",
+    name: "Toothpaste",
+    category: "Personal Care",
+    price: 60,
+    image: "https://source.unsplash.com/200x200/?toothpaste"
   },
   {
     id: 7,
-    name: "Bread",
-    category: "bakery",
-    price: 30,
-    image: "https://i.imgur.com/9V94Rp0.jpg",
+    name: "Rice",
+    category: "Grains",
+    price: 45,
+    image: "https://source.unsplash.com/200x200/?rice"
   },
   {
     id: 8,
-    name: "Biscuits",
-    category: "packaged",
-    price: 20,
-    image: "https://i.imgur.com/gE0HKeS.jpg",
+    name: "Chilli Powder",
+    category: "Spices",
+    price: 35,
+    image: "https://source.unsplash.com/200x200/?chilli"
   },
   {
     id: 9,
-    name: "Shampoo",
-    category: "personal",
-    price: 85,
-    image: "https://i.imgur.com/utUJXEl.jpg",
+    name: "Coffee",
+    category: "Beverages",
+    price: 130,
+    image: "https://source.unsplash.com/200x200/?coffee"
   },
   {
     id: 10,
-    name: "Dishwash Liquid",
-    category: "household",
-    price: 75,
-    image: "https://i.imgur.com/Mx1fT8M.jpg",
-  },
-  {
-    id: 11,
-    name: "Turmeric Powder",
-    category: "spices",
-    price: 60,
-    image: "https://i.imgur.com/Gp1RE7U.jpg",
-  },
-  {
-    id: 12,
-    name: "Wheat Flour (1kg)",
-    category: "grains",
-    price: 45,
-    image: "https://i.imgur.com/I9UIqJk.jpg",
-  },
-  {
-    id: 13,
-    name: "Rice (1kg)",
-    category: "grains",
-    price: 55,
-    image: "https://i.imgur.com/xkj2f7F.jpg",
-  },
-  {
-    id: 14,
-    name: "Tea Powder",
-    category: "beverages",
-    price: 100,
-    image: "https://i.imgur.com/JmCzWRX.jpg",
-  },
-  {
-    id: 15,
-    name: "Cold Drink",
-    category: "beverages",
-    price: 35,
-    image: "https://i.imgur.com/LGL8b7B.jpg",
+    name: "Soap",
+    category: "Household",
+    price: 30,
+    image: "https://source.unsplash.com/200x200/?soap"
   }
 ];
-
-export default products;
