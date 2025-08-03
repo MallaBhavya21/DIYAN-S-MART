@@ -1,80 +1,60 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const productList = document.getElementById("product-list");
-  const categoryButtons = document.querySelectorAll(".category-btn");
-  const searchInput = document.getElementById("search-input");
+document.addEventListener("DOMContentLoaded", function () {
+  const categories = [...new Set(products.map(product => product.category))];
+  const categoryContainer = document.querySelector(".categories");
+  const productContainer = document.querySelector(".products");
+  const searchInput = document.getElementById("searchInput");
   const cartCount = document.getElementById("cart-count");
 
-  let filteredProducts = products;
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-  function renderProducts(productsToRender) {
-    productList.innerHTML = "";
-
-    if (productsToRender.length === 0) {
-      productList.innerHTML = "<p>No products found.</p>";
-      return;
-    }
-
-    productsToRender.forEach(product => {
-      const productCard = document.createElement("div");
-      productCard.classList.add("product-card");
-
-      productCard.innerHTML = `
-        <img src="${product.image}" alt="${product.name}">
-        <h4>${product.name}</h4>
-        <p>₹${product.price}</p>
-        <button onclick="addToCart(${product.id})">Add to Cart</button>
-      `;
-
-      productList.appendChild(productCard);
-    });
-  }
-
-  function filterByCategory(category) {
-    if (category === "All") {
-      filteredProducts = products;
-    } else {
-      filteredProducts = products.filter(p => p.category === category);
-    }
-    renderProducts(filteredProducts);
-  }
-
-  function searchProducts(query) {
-    const results = filteredProducts.filter(product =>
-      product.name.toLowerCase().includes(query.toLowerCase())
-    );
-    renderProducts(results);
-  }
-
-  window.addToCart = function (productId) {
-    const item = products.find(p => p.id === productId);
-    const cartItem = cart.find(p => p.id === productId);
-
-    if (cartItem) {
-      cartItem.quantity += 1;
-    } else {
-      cart.push({ ...item, quantity: 1 });
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-    updateCartCount();
-  };
+  let cart = [];
 
   function updateCartCount() {
-    cartCount.textContent = cart.reduce((total, item) => total + item.quantity, 0);
+    cartCount.textContent = cart.length;
   }
 
-  categoryButtons.forEach(button => {
-    button.addEventListener("click", () => {
-      const category = button.getAttribute("data-category");
-      filterByCategory(category);
+  function createCategoryButtons() {
+    categoryContainer.innerHTML = `<button onclick="displayProducts(products)">All</button>`;
+    categories.forEach(category => {
+      const button = document.createElement("button");
+      button.textContent = category;
+      button.onclick = () => {
+        const filtered = products.filter(p => p.category === category);
+        displayProducts(filtered);
+      };
+      categoryContainer.appendChild(button);
     });
+  }
+
+  function displayProducts(productList) {
+    productContainer.innerHTML = "";
+    productList.forEach(product => {
+      const div = document.createElement("div");
+      div.classList.add("product");
+
+      div.innerHTML = `
+        <img src="${product.image}" alt="${product.name}" />
+        <h3>${product.name}</h3>
+        <p>Category: ${product.category}</p>
+        <p>Price: ₹${product.price}</p>
+        <button onclick="addToCart(${product.id})">Add to Cart</button>
+      `;
+      productContainer.appendChild(div);
+    });
+  }
+
+  window.addToCart = function (id) {
+    const item = products.find(p => p.id === id);
+    cart.push(item);
+    updateCartCount();
+    alert(`${item.name} added to cart`);
+  };
+
+  searchInput.addEventListener("input", function () {
+    const searchValue = this.value.toLowerCase();
+    const filtered = products.filter(p => p.name.toLowerCase().includes(searchValue));
+    displayProducts(filtered);
   });
 
-  searchInput.addEventListener("input", e => {
-    searchProducts(e.target.value);
-  });
-
-  renderProducts(products);
+  createCategoryButtons();
+  displayProducts(products);
   updateCartCount();
 });
