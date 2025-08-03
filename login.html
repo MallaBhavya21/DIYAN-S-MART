@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login - DIYAN'S MART</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      background: linear-gradient(to right, #e3ffe7, #d9e7ff);
+      font-family: 'Segoe UI', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .login-box {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+      color: #333;
+      text-align: center;
+    }
+
+    .login-box input,
+    .login-box button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+
+    .login-box button {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+    }
+
+    .login-box button:hover {
+      background-color: #0056b3;
+    }
+
+    #location-display {
+      font-size: 14px;
+      color: #555;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Welcome to DIYAN'S MART</h2>
+    <input type="text" id="login-name" placeholder="Enter your name" required />
+    <input type="tel" id="login-phone" placeholder="Enter your phone number" required />
+    <textarea id="login-address" placeholder="Enter your address (or use location)"></textarea>
+    <button id="use-location-btn">📍 Use My Location</button>
+    <div id="location-display"></div>
+    <button id="login-submit">Login</button>
+  </div>
+
+  <script>
+    document.getElementById("login-submit").addEventListener("click", () => {
+      const name = document.getElementById("login-name").value.trim();
+      const phone = document.getElementById("login-phone").value.trim();
+      const address = document.getElementById("login-address").value.trim();
+
+      if (!name || !phone || !address) {
+        alert("Please fill in all fields or use location.");
+        return;
+      }
+
+      localStorage.setItem("name", name);
+      localStorage.setItem("phone", phone);
+      localStorage.setItem("address", address);
+
+      window.location.href = "index.html";
+    });
+
+    document.getElementById("use-location-btn").addEventListener("click", () => {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+          const { latitude, longitude } = pos.coords;
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+          const data = await response.json();
+          const locationText = data.display_name;
+
+          document.getElementById("login-address").value = locationText;
+          document.getElementById("location-display").textContent = "📍 Location fetched!";
+        }, () => {
+          alert("Unable to retrieve your location.");
+        });
+      } else {
+        alert("Geolocation is not supported.");
+      }
+    });
+  </script>
+</body>
+</html>

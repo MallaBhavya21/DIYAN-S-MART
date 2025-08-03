@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DIYAN'S MART</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🛒 DIYAN'S MART</h1>
+    <div class="header-buttons">
+      <a href="cart.html" class="cart-link">🛒 Cart: <span id="cart-count">0</span></a>
+      <button id="location-btn">📍 Use My Location</button>
+      <button id="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside>
+      <h2>Categories</h2>
+      <div id="filters">
+        <button class="category-btn" data-category="all">All</button>
+        <button class="category-btn" data-category="fruits">Fruits</button>
+        <button class="category-btn" data-category="vegetables">Vegetables</button>
+        <button class="category-btn" data-category="dairy">Dairy</button>
+        <button class="category-btn" data-category="bakery">Bakery</button>
+        <button class="category-btn" data-category="packaged">Packaged</button>
+        <button class="category-btn" data-category="personal">Personal Care</button>
+        <button class="category-btn" data-category="household">Household</button>
+        <button class="category-btn" data-category="spices">Spices</button>
+        <button class="category-btn" data-category="grains">Grains</button>
+        <button class="category-btn" data-category="beverages">Beverages</button>
+      </div>
+    </aside>
+
+    <main>
+      <h2 class="welcome">👋 Welcome to <span>DIYAN'S MART</span>!</h2>
+      <input
+        type="text"
+        id="search-bar"
+        placeholder="Search for a product..."
+      />
+      <p id="location-output"></p>
+      <div id="product-list" class="grid"></div>
+    </main>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>

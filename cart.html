@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🛒 Your Cart - DIYAN'S MART</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🛒 Your Cart</h1>
+    <a href="index.html" class="btn">← Continue Shopping</a>
+  </header>
+
+  <main class="cart-container">
+    <section id="cart-items"></section>
+
+    <section id="checkout-section">
+      <h2>Checkout</h2>
+      <form id="checkout-form">
+        <label>Name: <input type="text" id="cust-name" required /></label>
+        <label>Phone: <input type="tel" id="cust-phone" required /></label>
+        <label>Address: <textarea id="cust-address" required></textarea></label>
+        
+        <label>Payment Method:
+          <select id="payment-method">
+            <option value="cod">Cash on Delivery</option>
+            <option value="upi">UPI / PhonePe / Paytm</option>
+            <option value="card">Debit / Credit Card</option>
+          </select>
+        </label>
+
+        <p id="delivery-estimate" style="font-size: 0.95em; color: #555;"></p>
+
+        <button type="submit" class="btn btn-order">Place Order</button>
+        <p id="order-success" class="success-msg"></p>
+      </form>
+    </section>
+  </main>
+
+  <script type="module">
+    import products from "./products.js";
+
+    const cartItems = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartContainer = document.getElementById("cart-items");
+    const form = document.getElementById("checkout-form");
+    const orderMsg = document.getElementById("order-success");
+    const deliveryInfo = document.getElementById("delivery-estimate");
+
+    function renderCart() {
+      if (cartItems.length === 0) {
+        cartContainer.innerHTML = "<p>Your cart is empty.</p>";
+        return;
+      }
+
+      cartContainer.innerHTML = "";
+      let total = 0;
+
+      cartItems.forEach(item => {
+        const product = products.find(p => p.id === item.id);
+        total += product.price * item.quantity;
+
+        const div = document.createElement("div");
+        div.className = "cart-item";
+        div.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" />
+          <div>
+            <h3>${product.name}</h3>
+            <p>₹${product.price} x ${item.quantity}</p>
+            <div class="qty-control">
+              <button data-id="${item.id}" class="qty-btn minus">−</button>
+              <span>${item.quantity}</span>
+              <button data-id="${item.id}" class="qty-btn plus">+</button>
+            </div>
+          </div>
+        `;
+        cartContainer.appendChild(div);
+      });
+
+      const totalDiv = document.createElement("div");
+      totalDiv.className = "total";
+      totalDiv.innerHTML = `<h3>Total: ₹${total}</h3>`;
+      cartContainer.appendChild(totalDiv);
+    }
+
+    function updateQuantity(id, change) {
+      const index = cartItems.findIndex(i => i.id === id);
+      if (index !== -1) {
+        cartItems[index].quantity += change;
+        if (cartItems[index].quantity <= 0) cartItems.splice(index, 1);
+        localStorage.setItem("cart", JSON.stringify(cartItems));
+        renderCart();
+      }
+    }
+
+    cartContainer.addEventListener("click", e => {
+      if (e.target.classList.contains("plus")) {
+        updateQuantity(parseInt(e.target.dataset.id), 1);
+      } else if (e.target.classList.contains("minus")) {
+        updateQuantity(parseInt(e.target.dataset.id), -1);
+      }
+    });
+
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const name = document.getElementById("cust-name").value;
+      const phone = document.getElementById("cust-phone").value;
+      const address = document.getElementById("cust-address").value;
+      const payment = document.getElementById("payment-method").value;
+
+      if (!name || !phone || !address) return alert("Fill in all fields!");
+
+      const orderId = "ORD" + Math.floor(100000 + Math.random() * 900000);
+      orderMsg.textContent = `✅ Order Placed! Order ID: ${orderId}`;
+      localStorage.removeItem("cart");
+      cartContainer.innerHTML = "";
+      form.reset();
+    });
+
+    function autofill() {
+      const name = localStorage.getItem("name") || "";
+      const phone = localStorage.getItem("phone") || "";
+      const address = localStorage.getItem("address") || "";
+
+      document.getElementById("cust-name").value = name;
+      document.getElementById("cust-phone").value = phone;
+      document.getElementById("cust-address").value = address;
+
+      const now = new Date();
+      const deliveryTime = new Date(now.getTime() + 90 * 60000); // +90 mins
+      deliveryInfo.textContent = `Estimated delivery: ${deliveryTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    }
+
+    autofill();
+    renderCart();
+  </script>
+</body>
+</html>
